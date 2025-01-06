@@ -1,1 +1,45 @@
+#include <iostream>
+
+#include <string>
+
+using namespace std;
+
+int main(int argumentCount, char argumentValues[10][100]) {
+    if (argumentCount != 2) {
+        cout << "Usage: ./caesar k" << endl;
+        return 1;
+    }
+
+    for (int i = 0; argumentValues[1][i] != '\0'; i++) {
+        if (argumentValues[1][i] < '0' || argumentValues[1][i] > '9') {
+            cout << "Usage: ./caesar key" << endl;
+            return 1;
+        }
+    }
+
+    int key = 0;
+    for (int i = 0; argumentValues[1][i] != '\0'; i++) {
+        key = key * 10 + (argumentValues[1][i] - '0');
+    }
+    key = key % 26;
+    
+    
+    string plaintext;
+    cout << "plaintext: ";
+    cin >> plaintext;
+
+    cout << "ciphertext: ";
+
+    for (int i = 0; plaintext[i] != '\0'; i++) {
+        char character = plaintext[i];
+        if ((character >= 'A' && character <= 'Z') || (character >= 'a' && character <= 'z')) {
+            char offset = (character >= 'A' && character <= 'Z') ? 'A' : 'a';
+            character = (character - offset + key) % 26 + offset;
+        }
+        cout << character;
+    }
+
+    cout << endl;
+    return 0;
+}
 
